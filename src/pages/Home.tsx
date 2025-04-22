@@ -3,31 +3,31 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const [interval, setInterval] = useState('2');
+  const [intervalValue, setIntervalValue] = useState('2');
   const [duration, setDuration] = useState('60');
   const [error, setError] = useState('');
   const [titleColors, setTitleColors] = useState({ kev: '#29AAE2', lor: '#BA141A' });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const titleTimer = setInterval(() => {
+    const titleTimer = window.setInterval(() => {
       setTitleColors(prev => ({
         kev: prev.kev === '#29AAE2' ? '#BA141A' : '#29AAE2',
         lor: prev.lor === '#29AAE2' ? '#BA141A' : '#29AAE2'
       }));
     }, 1500);
 
-    return () => clearInterval(titleTimer);
+    return () => window.clearInterval(titleTimer);
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    const intervalNum = Number(interval);
+    const intervalNum = Number(intervalValue);
     const durationNum = Number(duration);
 
-    if (!interval || !duration) {
+    if (!intervalValue || !duration) {
       setError('Please fill in both fields');
       return;
     }
@@ -58,8 +58,8 @@ const Home = () => {
               type="number"
               min="0.1"
               step="0.1"
-              value={interval}
-              onChange={(e) => setInterval(e.target.value)}
+              value={intervalValue}
+              onChange={(e) => setIntervalValue(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter interval time"
             />
