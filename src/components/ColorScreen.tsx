@@ -55,7 +55,7 @@ const ColorScreen = ({ interval, duration }: ColorScreenProps) => {
     >
       <button
         onClick={handleStop}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-gray-900 px-6 py-2 rounded-md shadow-lg hover:bg-gray-100 transition-colors font-semibold"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-gray-900 px-8 py-4 text-lg rounded-md shadow-lg hover:bg-gray-100 transition-colors font-semibold"
       >
         STOP
       </button>

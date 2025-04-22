@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,15 +5,12 @@ const Home = () => {
   const [intervalValue, setIntervalValue] = useState('2');
   const [duration, setDuration] = useState('60');
   const [error, setError] = useState('');
-  const [titleColors, setTitleColors] = useState({ kev: '#29AAE2', lor: '#BA141A' });
+  const [titleColor, setTitleColor] = useState('#29AAE2');
   const navigate = useNavigate();
 
   useEffect(() => {
     const titleTimer = window.setInterval(() => {
-      setTitleColors(prev => ({
-        kev: prev.kev === '#29AAE2' ? '#BA141A' : '#29AAE2',
-        lor: prev.lor === '#29AAE2' ? '#BA141A' : '#29AAE2'
-      }));
+      setTitleColor(prev => prev === '#29AAE2' ? '#BA141A' : '#29AAE2');
     }, 1500);
 
     return () => window.clearInterval(titleTimer);
@@ -43,9 +39,9 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-center mb-8">
-          <span style={{ color: titleColors.kev }}>Kev</span>
-          <span style={{ color: titleColors.lor }}>lor®</span>
+        <h1 className="text-3xl font-bold text-center mb-8 transition-colors duration-700">
+          <span style={{ color: titleColor }}>Kev</span>
+          <span style={{ color: titleColor }}>lor®</span>
         </h1>
         
         <form onSubmit={handleSubmit} className="space-y-6">
