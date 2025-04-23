@@ -11,14 +11,22 @@ const Home = () => {
 
   useEffect(() => {
     const colors = ['#29AAE2', '#BA141A'];
-    const titleTimer = window.setInterval(() => {
-      setTitleColors(prev => ({
+    
+    // Define color change function
+    const changeColors = () => {
+      setTitleColors({
         kev: colors[Math.floor(Math.random() * colors.length)],
         lor: colors[Math.floor(Math.random() * colors.length)]
-      }));
-    }, 1500);
+      });
+    };
+    
+    // Set initial interval
+    const titleTimer = window.setInterval(changeColors, 1500);
 
-    return () => window.clearInterval(titleTimer);
+    // Cleanup function
+    return () => {
+      if (titleTimer) window.clearInterval(titleTimer);
+    };
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -38,7 +46,12 @@ const Home = () => {
       return;
     }
 
-    navigate('/color-screen', { state: { interval: intervalNum, duration: durationNum } });
+    navigate('/color-screen', { 
+      state: { 
+        interval: intervalNum, 
+        duration: durationNum 
+      } 
+    });
   };
 
   return (

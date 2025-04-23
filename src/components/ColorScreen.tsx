@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface ColorScreenProps {
@@ -7,31 +7,32 @@ interface ColorScreenProps {
   duration: number;
 }
 
-const ColorScreen = ({ interval, duration }: ColorScreenProps) => {
+const ColorScreen: React.FC<ColorScreenProps> = ({ interval, duration }) => {
   const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [startTime] = useState(Date.now());
   const navigate = useNavigate();
 
-  const handleStop = () => {
-    if (timer) clearInterval(timer);
+  const handleStop = useCallback(() => {
     navigate('/');
-  };
+  }, [navigate]);
 
   useEffect(() => {
     const colors = ['#29AAE2', '#BA141A'];
     let colorIndex = 0;
     let isWhite = false;
-
+    
+    // Create an interval for color changing
     const intervalTimer = setInterval(() => {
       const elapsed = Date.now() - startTime;
       
+      // Check if duration has elapsed
       if (elapsed >= duration * 1000) {
         clearInterval(intervalTimer);
         navigate('/');
         return;
       }
 
+      // Toggle between white and colors
       if (isWhite) {
         setBackgroundColor(colors[colorIndex]);
         colorIndex = (colorIndex + 1) % colors.length;
@@ -41,10 +42,9 @@ const ColorScreen = ({ interval, duration }: ColorScreenProps) => {
       isWhite = !isWhite;
     }, interval * 500); // Divide by 2 because we're showing white between colors
 
-    setTimer(intervalTimer);
-
+    // Cleanup function
     return () => {
-      if (intervalTimer) clearInterval(intervalTimer);
+      clearInterval(intervalTimer);
     };
   }, [interval, duration, navigate, startTime]);
 

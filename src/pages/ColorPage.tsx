@@ -3,11 +3,16 @@ import React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import ColorScreen from '../components/ColorScreen';
 
-const ColorPage = () => {
-  const location = useLocation();
-  const state = location.state as { interval: number; duration: number } | null;
+interface LocationState {
+  interval: number;
+  duration: number;
+}
 
-  if (!state) {
+const ColorPage: React.FC = () => {
+  const location = useLocation();
+  const state = location.state as LocationState | null;
+
+  if (!state || typeof state.interval !== 'number' || typeof state.duration !== 'number') {
     return <Navigate to="/" replace />;
   }
 
